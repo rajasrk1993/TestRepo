@@ -1,12 +1,10 @@
 package com.epam.dto;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "employee")
 public class Employee {
 
     @Id
@@ -16,13 +14,25 @@ public class Employee {
     private String name;
     private String city;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    private Address address;
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     public Employee() {
     }
 
-    public Employee(String name, String city) {
-        super();
+    public Employee(String name, String city, Address address) {
         this.name = name;
         this.city = city;
+        this.address = address;
     }
 
     public long getId() {
